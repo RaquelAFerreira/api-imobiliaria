@@ -1,0 +1,13 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userprefs
+appsettings.Development.json
+.nuget/
+packages/
+.vscode/
+*.code-workspace
+
+
