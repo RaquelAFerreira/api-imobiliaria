@@ -1,4 +1,5 @@
 using AluguelImoveis.Models;
+using AluguelImoveis.Models.DTOs;
 using AluguelImoveis.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,22 +17,25 @@ namespace AluguelImoveis.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Imovel>>> Get()
+        public async Task<ActionResult<IEnumerable<Imovel>>> GetAll()
         {
-            var imoveis = await _imovelService.GetAllImoveisAsync();
+            var imoveis = await _imovelService.GetAllAsync();
             return Ok(imoveis);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Imovel>> GetById(Guid id)
         {
-            var imovel = await _imovelService.GetImovelByIdAsync(id);
-            if (imovel == null) return NotFound();
+            var imovel = await _imovelService.GetByIdAsync(id);
+            if (imovel == null)
+            {
+                return NotFound();
+            }
             return Ok(imovel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ImovelCreateDto imovelDto)
+        public async Task<ActionResult<Imovel>> Create([FromBody] ImovelCreateDto imovelDto)
         {
             if (!ModelState.IsValid)
             {
@@ -46,24 +50,46 @@ namespace AluguelImoveis.Controllers
                 Disponivel = imovelDto.Disponivel
             };
 
-            var createdImovel = await _imovelService.AddImovelAsync(imovel);
+            var createdImovel = await _imovelService.CreateAsync(imovel);
 
             return CreatedAtAction(nameof(GetById), new { id = createdImovel.Id }, createdImovel);
         }
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> Put(int id, Imovel imovel)
-        // {
-        //     if (id != imovel.Id) return BadRequest();
-        //     await _imovelService.UpdateImovelAsync(imovel);
-        //     return NoContent();
-        // }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] Imovel imovel)
+        {
+            if (id != imovel.Id)
+            {
+                return BadRequest("ID do imóvel não corresponde");
+            }
 
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> Delete(int id)
-        // {
-        //     await _imovelService.DeleteImovelAsync(id);
-        //     return NoContent();
-        // }
+            try
+            {
+                await _imovelService.UpdateAsync(imovel);
+                return NoContent();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await _imovelService.DeleteAsync(id);
+                return NoContent();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }
