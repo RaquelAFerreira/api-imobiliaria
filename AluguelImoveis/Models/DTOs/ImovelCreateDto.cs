@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using AluguelImoveis.Models.Enums;
 
 public class ImovelCreateDto
 {
     [Required(ErrorMessage = "O tipo do imóvel é obrigatório")]
-    public TipoImovel Tipo { get; set; }
+    public string Tipo { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "O endereço é obrigatório")]
     [StringLength(200, ErrorMessage = "O endereço não pode exceder 200 caracteres")]
