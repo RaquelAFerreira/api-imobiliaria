@@ -46,5 +46,10 @@ namespace AluguelImoveis.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync()
+        {
+            return await _context.Imoveis.Where(i => i.Disponivel).ToListAsync();
+        }
     }
 }

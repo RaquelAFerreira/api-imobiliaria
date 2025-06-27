@@ -10,7 +10,6 @@ namespace AluguelImoveis.Models
         public string Endereco { get; set; } = String.Empty;
         public decimal ValorLocacao { get; set; }
         public bool Disponivel { get; set; } = true;
-
-        // public ICollection<Aluguel> Alugueis { get; set; }
+        public string Codigo { get; set; } = String.Empty;
     }
 }

@@ -14,4 +14,8 @@ public class ImovelCreateDto
     public decimal ValorLocacao { get; set; }
 
     public bool Disponivel { get; set; } = true;
+
+    [Required(ErrorMessage = "O código é obrigatório")]
+    [StringLength(10, ErrorMessage = "O código não pode exceder 10 caracteres")]
+    public string Codigo { get; set; } = String.Empty;
 }

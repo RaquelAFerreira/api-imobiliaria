@@ -9,5 +9,6 @@ namespace AluguelImoveis.Repositories.Interfaces
         Task<Imovel> AddAsync(Imovel imovel);
         Task UpdateAsync(Imovel imovel);
         Task DeleteAsync(Guid id);
+        Task<IEnumerable<Imovel>> ListarDisponiveisAsync();
     }
 }

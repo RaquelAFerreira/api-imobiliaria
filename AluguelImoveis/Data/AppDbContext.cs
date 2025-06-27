@@ -14,17 +14,21 @@ namespace AluguelImoveis.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Imovel>().Property(i => i.Tipo).HasConversion<string>();
 
-            // modelBuilder.Entity<Aluguel>()
-            //     .HasOne(a => a.Imovel)
-            //     .WithMany(i => i.Alugueis)
-            //     .HasForeignKey(a => a.ImovelId);
+            // modelBuilder.Entity<Aluguel>(entity =>
+            // {
+            //     entity.HasKey(a => a.Id);
 
-            // modelBuilder.Entity<Aluguel>()
-            //     .HasOne(a => a.Locatario)
-            //     .WithMany(l => l.Alugueis)
-            //     .HasForeignKey(a => a.LocatarioId);
+            //     entity.HasOne(a => a.Imovel)
+            //         .WithMany() // ou .WithMany(i => i.Alugueis) se você tiver a coleção
+            //         .HasForeignKey(a => a.ImovelId)
+            //         .OnDelete(DeleteBehavior.Restrict); // ou Cascade, dependendo do seu domínio
+
+            //     entity.HasOne(a => a.Locatario)
+            //         .WithMany()
+            //         .HasForeignKey(a => a.LocatarioId)
+            //         .OnDelete(DeleteBehavior.Restrict);
+            // });
         }
     }
 }

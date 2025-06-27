@@ -47,7 +47,8 @@ namespace AluguelImoveis.Controllers
                 Tipo = imovelDto.Tipo,
                 Endereco = imovelDto.Endereco,
                 ValorLocacao = imovelDto.ValorLocacao,
-                Disponivel = imovelDto.Disponivel
+                Disponivel = imovelDto.Disponivel,
+                Codigo = imovelDto.Codigo
             };
 
             var createdImovel = await _imovelService.CreateAsync(imovel);
@@ -90,6 +91,13 @@ namespace AluguelImoveis.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpGet("disponiveis")]
+        public async Task<IActionResult> ListarDisponiveis()
+        {
+            var disponiveis = await _imovelService.ListarDisponiveisAsync();
+            return Ok(disponiveis);
         }
     }
 }
