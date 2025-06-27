@@ -47,7 +47,8 @@ namespace AluguelImoveis.Controllers
                 Tipo = imovelDto.Tipo,
                 Endereco = imovelDto.Endereco,
                 ValorLocacao = imovelDto.ValorLocacao,
-                Disponivel = imovelDto.Disponivel
+                Disponivel = imovelDto.Disponivel,
+                Codigo = imovelDto.Codigo
             };
 
             var createdImovel = await _imovelService.CreateAsync(imovel);
