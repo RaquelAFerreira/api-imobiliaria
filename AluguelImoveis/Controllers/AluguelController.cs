@@ -116,7 +116,7 @@ namespace AluguelImoveis.Controllers
         {
             var alugueis = await _aluguelService.ObterAlugueisDetalhadosAsync();
             var ativos = alugueis
-                .Where(a => a.DataTermino.Date >= DateTime.Today)
+                .Where(a => a.DataTermino.Date >= DateTime.Today) //DEV ajustar no repositorio 
                 .ToList();
 
             return Ok(ativos);

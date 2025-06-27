@@ -48,5 +48,10 @@ namespace AluguelImoveis.Services
 
             await _repository.DeleteAsync(id);
         }
+
+        public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync()
+        {
+            return await _repository.ListarDisponiveisAsync();
+        }
     }
 }

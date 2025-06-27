@@ -92,5 +92,12 @@ namespace AluguelImoveis.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet("disponiveis")]
+        public async Task<IActionResult> ListarDisponiveis()
+        {
+            var disponiveis = await _imovelService.ListarDisponiveisAsync();
+            return Ok(disponiveis);
+        }
     }
 }
