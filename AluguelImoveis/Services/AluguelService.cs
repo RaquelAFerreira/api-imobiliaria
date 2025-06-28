@@ -2,6 +2,8 @@ using AluguelImoveis.Models;
 using AluguelImoveis.Models.DTOs;
 using AluguelImoveis.Repositories.Interfaces;
 using AluguelImoveis.Services.Interfaces;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,15 +39,19 @@ namespace AluguelImoveis.Services
             }
 
             // Verifica se já há aluguéis com conflito de datas
-            var alugueisExistentes = await _aluguelRepository.BuscarPorImovelAsync(aluguel.ImovelId);
+            var alugueisExistentes = await _aluguelRepository.BuscarPorImovelAsync(
+                aluguel.ImovelId
+            );
 
-            bool existeConflito = alugueisExistentes.Any(a =>
-                a.DataTermino >= aluguel.DataInicio && a.DataInicio <= aluguel.DataTermino
+            bool existeConflito = alugueisExistentes.Any(
+                a => a.DataTermino >= aluguel.DataInicio && a.DataInicio <= aluguel.DataTermino
             );
 
             if (existeConflito)
             {
-                throw new InvalidOperationException("O imóvel selecionado já está alugado nesse período.");
+                throw new InvalidOperationException(
+                    "O imóvel selecionado já está alugado nesse período."
+                );
             }
 
             // Verifica se o imóvel está disponível
@@ -73,7 +79,26 @@ namespace AluguelImoveis.Services
 
         public async Task DeleteAsync(Guid id)
         {
-            await _aluguelRepository.DeleteAsync(id);
+            try
+            {
+                var aluguel = await _aluguelRepository.GetByIdAsync(id);
+
+                if (aluguel == null)
+                    throw new Exception("Aluguel não encontrado.");
+
+                var imovel = await _imovelRepository.GetByIdAsync(aluguel.ImovelId);
+                if (imovel != null)
+                {
+                    imovel.Disponivel = true;
+                    await _imovelRepository.UpdateAsync(imovel);
+                }
+
+                await _aluguelRepository.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao tentar excluir o aluguel.", ex);
+            }
         }
 
         public async Task<IEnumerable<Aluguel>> GetAllAsync()
@@ -123,32 +148,5 @@ namespace AluguelImoveis.Services
                 )
                 .ToList();
         }
-
-        // public async Task<IEnumerable<AluguelAtivoDto>> GetAlugueisAtivosComTempoAsync()
-        // {
-        //     var alugueisAtivos = await _aluguelRepository.GetAlugueisAtivosAsync();
-        //     var hoje = DateTime.UtcNow;
-
-        //     var result = new List<AluguelAtivoDto>();
-
-        //     foreach (var aluguel in alugueisAtivos)
-        //     {
-        //         var imovel = await _imovelRepository.GetByIdAsync(aluguel.ImovelId);
-        //         var locatario = await _locatarioRepository.GetByIdAsync(aluguel.LocatarioId);
-
-        //         result.Add(new AluguelAtivoDto
-        //         {
-        //             AluguelId = aluguel.Id,
-        //             ImovelEndereco = imovel?.Endereco ?? "Endereço não encontrado",
-        //             LocatarioNome = locatario?.NomeCompleto ?? "Locatário não encontrado",
-        //             DiasAlugado = (hoje - aluguel.DataInicio).Days,
-        //             TotalDiasContrato = (aluguel.DataTermino - aluguel.DataInicio).Days,
-        //             DataInicio = aluguel.DataInicio,
-        //             DataTermino = aluguel.DataTermino
-        //         });
-        //     }
-
-        //     return result;
-        // }
     }
 }
