@@ -45,11 +45,14 @@ namespace AluguelImoveis.Repositories
         {
             return await _context.Alugueis.FindAsync(id);
         }
-
         public async Task UpdateAsync(Aluguel aluguel)
         {
-            _context.Entry(aluguel).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var tracked = await _context.Alugueis.FindAsync(aluguel.Id);
+            if (tracked != null)
+            {
+                _context.Entry(aluguel).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<IEnumerable<Aluguel>> ObterAlugueisComDadosAsync()

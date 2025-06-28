@@ -33,8 +33,12 @@ namespace AluguelImoveis.Repositories
 
         public async Task UpdateAsync(Imovel imovel)
         {
-            _context.Entry(imovel).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var tracked = await _context.Imoveis.FindAsync(imovel.Id);
+            if (tracked != null)
+            {
+                _context.Entry(tracked).CurrentValues.SetValues(imovel);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteAsync(Guid id)

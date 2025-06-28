@@ -1,5 +1,7 @@
 using AluguelImoveis.Models;
 using AluguelImoveis.Repositories.Interfaces;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace AluguelImoveis.Services
 {
@@ -40,13 +42,30 @@ namespace AluguelImoveis.Services
 
         public async Task DeleteAsync(Guid id)
         {
-            var existing = await _repository.GetByIdAsync(id);
-            if (existing == null)
+            try
             {
-                throw new KeyNotFoundException("Imóvel não encontrado");
-            }
+                var existing = await _repository.GetByIdAsync(id);
+                if (existing == null)
+                {
+                    throw new KeyNotFoundException("Imóvel não encontrado");
+                }
 
-            await _repository.DeleteAsync(id);
+                await _repository.DeleteAsync(id);
+            }
+            catch (DbUpdateException dbEx)
+                when (dbEx.InnerException is SqlException sqlEx
+                    && (sqlEx.Number == 547 || sqlEx.Number == 1451)
+                )
+            {
+                throw new InvalidOperationException(
+                    "Não foi possível excluir o imóvel porque ele está vinculado a um ou mais aluguéis.",
+                    dbEx
+                );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao tentar excluir o imóvel.", ex);
+            }
         }
 
         public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync()
