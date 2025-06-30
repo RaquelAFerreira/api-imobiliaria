@@ -26,6 +26,13 @@ namespace AluguelImoveis.Services
 
         public async Task<Imovel> CreateAsync(Imovel imovel)
         {
+            if (await _repository.CodigoExistsAsync(imovel.Codigo))
+            {
+                throw new InvalidOperationException(
+                    "Já existe um imóvel com este código cadastrado"
+                );
+            }
+
             return await _repository.AddAsync(imovel);
         }
 
@@ -35,6 +42,16 @@ namespace AluguelImoveis.Services
             if (existing == null)
             {
                 throw new KeyNotFoundException("Imóvel não encontrado");
+            }
+
+            if (
+                existing.Codigo != imovel.Codigo
+                && await _repository.CodigoExistsAsync(imovel.Codigo, imovel.Id)
+            )
+            {
+                throw new InvalidOperationException(
+                    "Já existe um imóvel com este código cadastrado"
+                );
             }
 
             await _repository.UpdateAsync(imovel);
@@ -51,16 +68,6 @@ namespace AluguelImoveis.Services
                 }
 
                 await _repository.DeleteAsync(id);
-            }
-            catch (DbUpdateException dbEx)
-                when (dbEx.InnerException is SqlException sqlEx
-                    && (sqlEx.Number == 547 || sqlEx.Number == 1451)
-                )
-            {
-                throw new InvalidOperationException(
-                    "Não foi possível excluir o imóvel porque ele está vinculado a um ou mais aluguéis.",
-                    dbEx
-                );
             }
             catch (Exception ex)
             {

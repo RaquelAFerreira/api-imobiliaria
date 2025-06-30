@@ -10,5 +10,6 @@ namespace AluguelImoveis.Repositories.Interfaces
         Task UpdateAsync(Imovel imovel);
         Task DeleteAsync(Guid id);
         Task<IEnumerable<Imovel>> ListarDisponiveisAsync();
+        Task<bool> CodigoExistsAsync(string codigo, Guid? ignoreId = null);
     }
 }

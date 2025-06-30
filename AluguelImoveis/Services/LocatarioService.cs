@@ -62,16 +62,6 @@ namespace AluguelImoveis.Services
 
                 await _repository.DeleteAsync(id);
             }
-            catch (DbUpdateException dbEx)
-                when (dbEx.InnerException is SqlException sqlEx
-                    && (sqlEx.Number == 547 || sqlEx.Number == 1451)
-                )
-            {
-                throw new InvalidOperationException(
-                    "Não foi possível excluir o locatário porque ele está vinculado a um ou mais aluguéis.",
-                    dbEx
-                );
-            }
             catch (Exception ex)
             {
                 throw new Exception("Ocorreu um erro ao tentar excluir o locatário.", ex);

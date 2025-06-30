@@ -52,7 +52,6 @@ namespace AluguelImoveis.Controllers
             };
 
             var createdImovel = await _imovelService.CreateAsync(imovel);
-
             return CreatedAtAction(nameof(GetById), new { id = createdImovel.Id }, createdImovel);
         }
 
