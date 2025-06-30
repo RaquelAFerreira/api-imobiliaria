@@ -65,7 +65,7 @@ namespace AluguelImoveis.Repositories
             }
         }
 
-        public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync()
+        public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync() //DEV
         {
             return await _context.Imoveis.Where(i => i.Disponivel).ToListAsync();
         }

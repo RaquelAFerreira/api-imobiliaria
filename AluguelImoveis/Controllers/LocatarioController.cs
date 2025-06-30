@@ -9,9 +9,9 @@ namespace AluguelImoveis.Controllers
     [ApiController]
     public class LocatariosController : ControllerBase
     {
-        private readonly LocatarioService _locatarioService;
+        private readonly ILocatarioService _locatarioService;
 
-        public LocatariosController(LocatarioService locatarioService)
+        public LocatariosController(ILocatarioService locatarioService)
         {
             _locatarioService = locatarioService;
         }

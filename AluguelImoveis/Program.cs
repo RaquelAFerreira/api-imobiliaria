@@ -24,8 +24,8 @@ builder.Services.AddScoped<IImovelRepository, ImovelRepository>();
 builder.Services.AddScoped<IAluguelRepository, AluguelRepository>();
 builder.Services.AddScoped<ILocatarioRepository, LocatarioRepository>();
 
-builder.Services.AddScoped<LocatarioService>();
-builder.Services.AddScoped<ImovelService>();
+builder.Services.AddScoped<ILocatarioService, LocatarioService>();
+builder.Services.AddScoped<IImovelService, ImovelService>();
 builder.Services.AddScoped<IAluguelService, AluguelService>();
 
 builder.Services.AddEndpointsApiExplorer();

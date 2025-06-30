@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AluguelImoveis.Services
 {
-    public class ImovelService
+    public class ImovelService : IImovelService
     {
         private readonly IImovelRepository _repository;
 
@@ -75,7 +75,7 @@ namespace AluguelImoveis.Services
             }
         }
 
-        public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync()
+        public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync() //DEV
         {
             return await _repository.ListarDisponiveisAsync();
         }

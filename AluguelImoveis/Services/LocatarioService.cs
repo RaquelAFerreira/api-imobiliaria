@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AluguelImoveis.Services
 {
-    public class LocatarioService
+    public class LocatarioService : ILocatarioService
     {
         private readonly ILocatarioRepository _repository;
 

@@ -18,12 +18,12 @@ namespace AluguelImoveis.Controllers
             _aluguelService = aluguelService;
         }
 
-        // [HttpGet]
-        // public async Task<ActionResult<IEnumerable<Aluguel>>> GetAll()
-        // {
-        //     var alugueis = await _aluguelService.GetAllAsync();
-        //     return Ok(alugueis);
-        // }
+        [HttpGet]
+        public async Task<IActionResult> Listar()
+        {
+            var alugueis = await _aluguelService.ObterAlugueisDetalhadosAsync();
+            return Ok(alugueis);
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Aluguel>> GetById(Guid id)
@@ -91,13 +91,6 @@ namespace AluguelImoveis.Controllers
             {
                 return NotFound();
             }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Listar()
-        {
-            var alugueis = await _aluguelService.ObterAlugueisDetalhadosAsync();
-            return Ok(alugueis);
         }
     }
 }
