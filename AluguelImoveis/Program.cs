@@ -14,18 +14,12 @@ builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    });
-
 builder.Services.AddScoped<IImovelRepository, ImovelRepository>();
 builder.Services.AddScoped<IAluguelRepository, AluguelRepository>();
 builder.Services.AddScoped<ILocatarioRepository, LocatarioRepository>();
 
-builder.Services.AddScoped<LocatarioService>();
-builder.Services.AddScoped<ImovelService>();
+builder.Services.AddScoped<ILocatarioService, LocatarioService>();
+builder.Services.AddScoped<IImovelService, ImovelService>();
 builder.Services.AddScoped<IAluguelService, AluguelService>();
 
 builder.Services.AddEndpointsApiExplorer();

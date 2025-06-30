@@ -18,12 +18,12 @@ namespace AluguelImoveis.Controllers
             _aluguelService = aluguelService;
         }
 
-        // [HttpGet]
-        // public async Task<ActionResult<IEnumerable<Aluguel>>> GetAll()
-        // {
-        //     var alugueis = await _aluguelService.GetAllAsync();
-        //     return Ok(alugueis);
-        // }
+        [HttpGet]
+        public async Task<IActionResult> Listar()
+        {
+            var alugueis = await _aluguelService.ObterAlugueisDetalhadosAsync();
+            return Ok(alugueis);
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Aluguel>> GetById(Guid id)
@@ -52,19 +52,8 @@ namespace AluguelImoveis.Controllers
                 DataTermino = aluguelDto.DataTermino
             };
 
-            try
-            {
-                var createdAluguel = await _aluguelService.CreateAsync(aluguel);
-                return CreatedAtAction(
-                    nameof(GetById),
-                    new { id = createdAluguel.Id },
-                    createdAluguel
-                );
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            var createdAluguel = await _aluguelService.CreateAsync(aluguel);
+            return CreatedAtAction(nameof(GetById), new { id = createdAluguel.Id }, createdAluguel);
         }
 
         [HttpPut("{id}")]
@@ -102,24 +91,6 @@ namespace AluguelImoveis.Controllers
             {
                 return NotFound();
             }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Listar()
-        {
-            var alugueis = await _aluguelService.ObterAlugueisDetalhadosAsync();
-            return Ok(alugueis);
-        }
-
-        [HttpGet("ativos")]
-        public async Task<IActionResult> ListarAtivos()
-        {
-            var alugueis = await _aluguelService.ObterAlugueisDetalhadosAsync();
-            var ativos = alugueis
-                .Where(a => a.DataTermino.Date >= DateTime.Today) //DEV ajustar no repositorio 
-                .ToList();
-
-            return Ok(ativos);
         }
     }
 }

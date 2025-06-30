@@ -2,6 +2,7 @@ using AluguelImoveis.Models;
 using AluguelImoveis.Data;
 using AluguelImoveis.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace AluguelImoveis.Repositories
 {
@@ -43,17 +44,42 @@ namespace AluguelImoveis.Repositories
 
         public async Task DeleteAsync(Guid id)
         {
-            var imovel = await _context.Imoveis.FindAsync(id);
-            if (imovel != null)
+            try
             {
-                _context.Imoveis.Remove(imovel);
-                await _context.SaveChangesAsync();
+                var imovel = await _context.Imoveis.FindAsync(id);
+                if (imovel != null)
+                {
+                    _context.Imoveis.Remove(imovel);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (DbUpdateException dbEx)
+                when (dbEx.InnerException is SqlException sqlEx
+                    && (sqlEx.Number == 547 || sqlEx.Number == 1451)
+                )
+            {
+                throw new InvalidOperationException(
+                    "Não foi possível excluir o imóvel porque ele está vinculado a um ou mais aluguéis.",
+                    dbEx
+                );
             }
         }
 
-        public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync()
+        public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync() //DEV
         {
             return await _context.Imoveis.Where(i => i.Disponivel).ToListAsync();
+        }
+
+        public async Task<bool> CodigoExistsAsync(string codigo, Guid? ignoreId = null)
+        {
+            var query = _context.Imoveis.Where(i => i.Codigo == codigo);
+            
+            if (ignoreId.HasValue)
+            {
+                query = query.Where(i => i.Id != ignoreId.Value);
+            }
+            
+            return await query.AnyAsync();
         }
     }
 }

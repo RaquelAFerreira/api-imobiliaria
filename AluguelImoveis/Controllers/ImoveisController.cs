@@ -9,9 +9,9 @@ namespace AluguelImoveis.Controllers
     [ApiController]
     public class ImoveisController : ControllerBase
     {
-        private readonly ImovelService _imovelService;
+        private readonly IImovelService _imovelService;
 
-        public ImoveisController(ImovelService imovelService)
+        public ImoveisController(IImovelService imovelService)
         {
             _imovelService = imovelService;
         }
@@ -52,7 +52,6 @@ namespace AluguelImoveis.Controllers
             };
 
             var createdImovel = await _imovelService.CreateAsync(imovel);
-
             return CreatedAtAction(nameof(GetById), new { id = createdImovel.Id }, createdImovel);
         }
 
