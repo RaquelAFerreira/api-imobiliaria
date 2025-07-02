@@ -67,6 +67,8 @@ namespace AluguelImoveis.Services
                     throw new KeyNotFoundException("Imóvel não encontrado");
                 }
 
+                //DEV verificar se tem aluguel vinculado
+
                 await _repository.DeleteAsync(id);
             }
             catch (Exception ex)
@@ -75,9 +77,9 @@ namespace AluguelImoveis.Services
             }
         }
 
-        public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync() //DEV
+        public async Task<IEnumerable<Imovel>> GetDisponiveisAsync()
         {
-            return await _repository.ListarDisponiveisAsync();
+            return await _repository.GetDisponiveisAsync();
         }
     }
 }

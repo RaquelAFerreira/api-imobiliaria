@@ -56,10 +56,11 @@ namespace AluguelImoveis.Services
 
             // Verifica se o imóvel está disponível
             var imovel = await _imovelRepository.GetByIdAsync(aluguel.ImovelId);
-
             if (imovel == null)
             {
-                throw new InvalidOperationException("Imóvel não encontrado.");
+                throw new InvalidOperationException(
+                    "Imóvel não encontrado ou não está disponível."
+                );
             }
 
             if (!imovel.Disponivel)
@@ -116,14 +117,14 @@ namespace AluguelImoveis.Services
             await _aluguelRepository.UpdateAsync(aluguel);
         }
 
-        public async Task<List<AluguelDetalhadoDto>> ObterAlugueisDetalhadosAsync()
+        public async Task<List<AluguelDto>> GetAllDetailedAsync()
         {
-            var alugueis = await _aluguelRepository.ObterAlugueisComDadosAsync();
+            var alugueis = await _aluguelRepository.GetAllDetailedAsync();
             //DEV ver se retorno os ids tambem
             return alugueis
                 .Select(
                     a =>
-                        new AluguelDetalhadoDto
+                        new AluguelDto
                         {
                             AluguelId = a.Id,
                             DataInicio = a.DataInicio,

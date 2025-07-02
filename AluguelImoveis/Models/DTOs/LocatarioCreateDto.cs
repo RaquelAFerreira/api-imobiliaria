@@ -5,7 +5,7 @@ namespace AluguelImoveis.Models.DTOs
     public class LocatarioCreateDto
     {
         [Required(ErrorMessage = "Nome completo é obrigatório")]
-        [StringLength(100, ErrorMessage = "Nome não pode exceder 100 caracteres")]
+        [StringLength(100, ErrorMessage = "Nome não pode exceder 100 caracteres")] //DEV colocar no WPF
         public string NomeCompleto { get; set; }
 
         [Required(ErrorMessage = "CPF é obrigatório")]

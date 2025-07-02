@@ -1,6 +1,6 @@
 namespace AluguelImoveis.Models.DTOs
 {
-    public class AluguelDetalhadoDto
+    public class AluguelDto
     {
         public Guid AluguelId { get; set; }
         public DateTime DataInicio { get; set; }

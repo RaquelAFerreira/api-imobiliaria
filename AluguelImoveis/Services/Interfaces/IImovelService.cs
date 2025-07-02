@@ -12,6 +12,6 @@ namespace AluguelImoveis.Services
         Task<Imovel> CreateAsync(Imovel imovel);
         Task UpdateAsync(Imovel imovel);
         Task DeleteAsync(Guid id);
-        Task<IEnumerable<Imovel>> ListarDisponiveisAsync();
+        Task<IEnumerable<Imovel>> GetDisponiveisAsync();
     }
 }

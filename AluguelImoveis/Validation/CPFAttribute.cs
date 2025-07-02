@@ -4,35 +4,35 @@ public class CPFAttribute : ValidationAttribute
 {
     public override bool IsValid(object? value)
     {
-        if (value is not string cpf)
+        if (value is not string cpfString)
             return false;
 
-        cpf = new string(cpf.Where(char.IsDigit).ToArray());
+        cpfString = new string(cpfString.Where(char.IsDigit).ToArray());
 
-        if (cpf.Length != 11 || cpf.All(c => c == cpf[0]))
+        if (cpfString.Length != 11 || cpfString.All(d => d == cpfString[0]))
             return false;
 
-        var multiplicadores1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-        var multiplicadores2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+        var firstMultipliers = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+        var secondMultipliers = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
-        var tempCpf = cpf.Substring(0, 9);
-        var soma = 0;
+        var partialCpf = cpfString.Substring(0, 9);
+        var sum = 0;
 
         for (int i = 0; i < 9; i++)
-            soma += int.Parse(tempCpf[i].ToString()) * multiplicadores1[i];
+            sum += int.Parse(partialCpf[i].ToString()) * firstMultipliers[i];
 
-        var resto = soma % 11;
-        var digito1 = resto < 2 ? 0 : 11 - resto;
+        var remainder = sum % 11;
+        var firstDigit = remainder < 2 ? 0 : 11 - remainder;
 
-        tempCpf += digito1;
-        soma = 0;
+        partialCpf += firstDigit;
+        sum = 0;
 
         for (int i = 0; i < 10; i++)
-            soma += int.Parse(tempCpf[i].ToString()) * multiplicadores2[i];
+            sum += int.Parse(partialCpf[i].ToString()) * secondMultipliers[i];
 
-        resto = soma % 11;
-        var digito2 = resto < 2 ? 0 : 11 - resto;
+        remainder = sum % 11;
+        var secondDigit = remainder < 2 ? 0 : 11 - remainder;
 
-        return cpf.EndsWith(digito1.ToString() + digito2.ToString());
+        return cpfString.EndsWith(firstDigit.ToString() + secondDigit.ToString());
     }
 }

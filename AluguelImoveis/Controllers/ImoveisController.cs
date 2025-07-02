@@ -51,8 +51,19 @@ namespace AluguelImoveis.Controllers
                 Codigo = imovelDto.Codigo
             };
 
-            var createdImovel = await _imovelService.CreateAsync(imovel);
-            return CreatedAtAction(nameof(GetById), new { id = createdImovel.Id }, createdImovel);
+            try
+            {
+                var createdImovel = await _imovelService.CreateAsync(imovel);
+                return CreatedAtAction(
+                    nameof(GetById),
+                    new { id = createdImovel.Id },
+                    createdImovel
+                );
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
@@ -93,9 +104,9 @@ namespace AluguelImoveis.Controllers
         }
 
         [HttpGet("disponiveis")]
-        public async Task<IActionResult> ListarDisponiveis()
+        public async Task<IActionResult> GetDisponiveisAsync()
         {
-            var disponiveis = await _imovelService.ListarDisponiveisAsync();
+            var disponiveis = await _imovelService.GetDisponiveisAsync();
             return Ok(disponiveis);
         }
     }

@@ -6,7 +6,7 @@ public class ImovelCreateDto
     public string Tipo { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "O endereço é obrigatório")]
-    [StringLength(200, ErrorMessage = "O endereço não pode exceder 200 caracteres")]
+    [StringLength(100, ErrorMessage = "O endereço não pode exceder 100 caracteres")]
     public string Endereco { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "O valor da locação é obrigatório")]
