@@ -8,10 +8,12 @@ namespace AluguelImoveis.Services
     public class LocatarioService : ILocatarioService
     {
         private readonly ILocatarioRepository _repository;
+        private readonly IAluguelRepository _aluguelRepository;
 
-        public LocatarioService(ILocatarioRepository repository)
+        public LocatarioService(ILocatarioRepository repository, IAluguelRepository aluguelRepository)
         {
             _repository = repository;
+            _aluguelRepository = aluguelRepository;
         }
 
         public async Task<IEnumerable<Locatario>> GetAllAsync()
@@ -52,22 +54,22 @@ namespace AluguelImoveis.Services
 
         public async Task DeleteAsync(Guid id)
         {
-            try
+            var existing = await _repository.GetByIdAsync(id);
+            if (existing == null)
             {
-                var existing = await _repository.GetByIdAsync(id);
-                if (existing == null)
-                {
-                    throw new KeyNotFoundException("Locatário não encontrado");
-                }
-
-                //DEV verificar se tem aluguel vinculado
-
-                await _repository.DeleteAsync(id);
+                throw new KeyNotFoundException("Locatário não encontrado");
             }
-            catch (Exception ex)
+
+            var possuiAlugueis = await _aluguelRepository.ExistsForLocatarioAsync(id);
+            if (possuiAlugueis)
             {
-                throw new Exception("Ocorreu um erro ao tentar excluir o locatário.", ex);
+                throw new InvalidOperationException(
+                    "Não é possível excluir o locatário porque ele está vinculado a um ou mais aluguéis."
+                );
             }
+
+            await _repository.DeleteAsync(id);
         }
+
     }
 }

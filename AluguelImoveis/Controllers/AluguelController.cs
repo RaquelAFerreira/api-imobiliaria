@@ -19,7 +19,7 @@ namespace AluguelImoveis.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Listar()
+        public async Task<IActionResult> GetAll()
         {
             var alugueis = await _aluguelService.GetAllDetailedAsync();
             return Ok(alugueis);
