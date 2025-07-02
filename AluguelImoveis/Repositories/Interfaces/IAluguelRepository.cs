@@ -13,7 +13,7 @@ namespace AluguelImoveis.Repositories.Interfaces
         Task<Aluguel> CreateAsync(Aluguel aluguel);
         Task UpdateAsync(Aluguel aluguel);
         Task DeleteAsync(Guid id);
-        Task<IEnumerable<Aluguel>> ObterAlugueisComDadosAsync();
+        Task<IEnumerable<Aluguel>> GetAllDetailedAsync();
         Task<IEnumerable<Aluguel>> BuscarPorImovelAsync(Guid imovelId);
     }
 }

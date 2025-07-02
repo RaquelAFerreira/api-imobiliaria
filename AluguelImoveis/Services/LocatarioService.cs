@@ -60,6 +60,8 @@ namespace AluguelImoveis.Services
                     throw new KeyNotFoundException("Locatário não encontrado");
                 }
 
+                //DEV verificar se tem aluguel vinculado
+
                 await _repository.DeleteAsync(id);
             }
             catch (Exception ex)

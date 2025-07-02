@@ -13,6 +13,6 @@ namespace AluguelImoveis.Services.Interfaces
         Task<Aluguel> CreateAsync(Aluguel aluguel);
         Task UpdateAsync(Aluguel aluguel);
         Task DeleteAsync(Guid id);
-        Task<List<AluguelDetalhadoDto>> ObterAlugueisDetalhadosAsync();
+        Task<List<AluguelDto>> GetAllDetailedAsync();
     }
 }

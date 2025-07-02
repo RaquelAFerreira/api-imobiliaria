@@ -65,20 +65,27 @@ namespace AluguelImoveis.Repositories
             }
         }
 
-        public async Task<IEnumerable<Imovel>> ListarDisponiveisAsync() //DEV
+        public async Task<IEnumerable<Imovel>> GetDisponiveisAsync()
         {
-            return await _context.Imoveis.Where(i => i.Disponivel).ToListAsync();
+            var hoje = DateTime.Today;
+
+            return await _context.Imoveis
+                .Where(i => i.Disponivel)
+                .Where(
+                    i => !_context.Alugueis.Any(a => a.ImovelId == i.Id && a.DataTermino >= hoje)
+                )
+                .ToListAsync();
         }
 
         public async Task<bool> CodigoExistsAsync(string codigo, Guid? ignoreId = null)
         {
             var query = _context.Imoveis.Where(i => i.Codigo == codigo);
-            
+
             if (ignoreId.HasValue)
             {
                 query = query.Where(i => i.Id != ignoreId.Value);
             }
-            
+
             return await query.AnyAsync();
         }
     }
