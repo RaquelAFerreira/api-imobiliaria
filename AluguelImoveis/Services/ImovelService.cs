@@ -67,8 +67,8 @@ namespace AluguelImoveis.Services
                 throw new KeyNotFoundException("Imóvel não encontrado");
             }
 
-            var possuiAlugueis = await _aluguelRepository.ExistsForImovelAsync(id);
-            if (possuiAlugueis)
+            var hasAlugueis = await _aluguelRepository.ExistsForImovelAsync(id);
+            if (hasAlugueis)
             {
                 throw new InvalidOperationException(
                     "Não é possível excluir o imóvel porque ele está vinculado a um ou mais aluguéis."
