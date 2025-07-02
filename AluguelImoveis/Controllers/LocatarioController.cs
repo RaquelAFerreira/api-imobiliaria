@@ -102,6 +102,10 @@ namespace AluguelImoveis.Controllers
             {
                 return NotFound();
             }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
         }
     }
 }

@@ -45,6 +45,7 @@ namespace AluguelImoveis.Repositories
         {
             return await _context.Alugueis.FindAsync(id);
         }
+
         public async Task UpdateAsync(Aluguel aluguel)
         {
             var tracked = await _context.Alugueis.FindAsync(aluguel.Id);
@@ -63,9 +64,19 @@ namespace AluguelImoveis.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Aluguel>> BuscarPorImovelAsync(Guid imovelId)
+        public async Task<IEnumerable<Aluguel>> GetByImovelAsync(Guid imovelId)
         {
             return await _context.Alugueis.Where(a => a.ImovelId == imovelId).ToListAsync();
+        }
+
+        public async Task<bool> ExistsForImovelAsync(Guid imovelId)
+        {
+            return await _context.Alugueis.AnyAsync(a => a.ImovelId == imovelId);
+        }
+
+        public async Task<bool> ExistsForLocatarioAsync(Guid locatarioId)
+        {
+            return await _context.Alugueis.AnyAsync(a => a.LocatarioId == locatarioId);
         }
     }
 }

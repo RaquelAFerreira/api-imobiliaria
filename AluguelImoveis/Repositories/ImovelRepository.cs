@@ -44,25 +44,13 @@ namespace AluguelImoveis.Repositories
 
         public async Task DeleteAsync(Guid id)
         {
-            try
+            var imovel = await _context.Imoveis.FindAsync(id);
+            if (imovel != null)
             {
-                var imovel = await _context.Imoveis.FindAsync(id);
-                if (imovel != null)
-                {
-                    _context.Imoveis.Remove(imovel);
-                    await _context.SaveChangesAsync();
-                }
+                _context.Imoveis.Remove(imovel);
+                await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException dbEx)
-                when (dbEx.InnerException is SqlException sqlEx
-                    && (sqlEx.Number == 547 || sqlEx.Number == 1451)
-                )
-            {
-                throw new InvalidOperationException(
-                    "Não foi possível excluir o imóvel porque ele está vinculado a um ou mais aluguéis.",
-                    dbEx
-                );
-            }
+
         }
 
         public async Task<IEnumerable<Imovel>> GetDisponiveisAsync()

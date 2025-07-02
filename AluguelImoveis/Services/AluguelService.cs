@@ -39,7 +39,7 @@ namespace AluguelImoveis.Services
             }
 
             // Verifica se já há aluguéis com conflito de datas
-            var alugueisExistentes = await _aluguelRepository.BuscarPorImovelAsync(
+            var alugueisExistentes = await _aluguelRepository.GetByImovelAsync(
                 aluguel.ImovelId
             );
 
@@ -80,26 +80,19 @@ namespace AluguelImoveis.Services
 
         public async Task DeleteAsync(Guid id)
         {
-            try
+            var aluguel = await _aluguelRepository.GetByIdAsync(id);
+
+            if (aluguel == null)
+                throw new Exception("Aluguel não encontrado.");
+
+            var imovel = await _imovelRepository.GetByIdAsync(aluguel.ImovelId);
+            if (imovel != null)
             {
-                var aluguel = await _aluguelRepository.GetByIdAsync(id);
-
-                if (aluguel == null)
-                    throw new Exception("Aluguel não encontrado.");
-
-                var imovel = await _imovelRepository.GetByIdAsync(aluguel.ImovelId);
-                if (imovel != null)
-                {
-                    imovel.Disponivel = true;
-                    await _imovelRepository.UpdateAsync(imovel);
-                }
-
-                await _aluguelRepository.DeleteAsync(id);
+                imovel.Disponivel = true;
+                await _imovelRepository.UpdateAsync(imovel);
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Ocorreu um erro ao tentar excluir o aluguel.", ex);
-            }
+
+            await _aluguelRepository.DeleteAsync(id);
         }
 
         public async Task<IEnumerable<Aluguel>> GetAllAsync()
