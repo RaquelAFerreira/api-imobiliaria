@@ -26,6 +26,22 @@ API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis.
    git clone https://github.com/RaquelAFerreira/api-imobiliaria.git
    cd AluguelImoveis
 
+2. Restaure os pacotes:
+
+   dotnet restore
+
+3. Aplique as migrações (se usar EF Core + SQLite):
+
+   dotnet ef database update
+
+4. Inicie a aplicação:
+
+   dotnet run
+
+5. Acesse a API em:
+
+http://localhost:5287
+
 ### Documentações
 
 - [Swagger](http://localhost:5287/swagger/index.html)
