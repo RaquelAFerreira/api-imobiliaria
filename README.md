@@ -46,4 +46,5 @@ API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis.
 
 - [Swagger](http://localhost:5287/swagger/index.html)
 - Criação de comandos no banco de dados
-- Utilização do front-end
+- Execução do front-end
+- [Manual do sistema desktop](/manual.pdf)
