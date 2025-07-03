@@ -61,14 +61,12 @@ namespace AluguelImoveis.Services
 
         public async Task DeleteAsync(Guid id)
         {
-            var existing = await _repository.GetByIdAsync(id);
-            if (existing == null)
+            if (await _repository.GetByIdAsync(id) == null)
             {
                 throw new KeyNotFoundException("Imóvel não encontrado");
             }
 
-            var hasAlugueis = await _aluguelRepository.ExistsForImovelAsync(id);
-            if (hasAlugueis)
+            if (await _aluguelRepository.ExistsForImovelAsync(id))
             {
                 throw new InvalidOperationException(
                     "Não é possível excluir o imóvel porque ele está vinculado a um ou mais aluguéis."

@@ -39,9 +39,7 @@ namespace AluguelImoveis.Services
             }
 
             // Verifica se já há aluguéis com conflito de datas
-            var alugueisExistentes = await _aluguelRepository.GetByImovelAsync(
-                aluguel.ImovelId
-            );
+            var alugueisExistentes = await _aluguelRepository.GetByImovelAsync(aluguel.ImovelId);
 
             bool existeConflito = alugueisExistentes.Any(
                 a => a.DataTermino >= aluguel.DataInicio && a.DataInicio <= aluguel.DataTermino

@@ -54,14 +54,12 @@ namespace AluguelImoveis.Services
 
         public async Task DeleteAsync(Guid id)
         {
-            var existing = await _repository.GetByIdAsync(id);
-            if (existing == null)
+            if (await _repository.GetByIdAsync(id) == null)
             {
                 throw new KeyNotFoundException("Locatário não encontrado");
             }
 
-            var hasAlugueis = await _aluguelRepository.ExistsForLocatarioAsync(id);
-            if (hasAlugueis)
+            if (await _aluguelRepository.ExistsForLocatarioAsync(id))
             {
                 throw new InvalidOperationException(
                     "Não é possível excluir o locatário porque ele está vinculado a um ou mais aluguéis."
