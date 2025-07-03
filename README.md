@@ -16,7 +16,7 @@ API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis.
 ### Pré-requisitos
 
 - Baixar [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
-- Baixar [Visual Studio 2022](https://visualstudio.microsoft.com/) ou VS Code
+- Baixar Visual Studio Code
 - Baixar extensões do VS Code: C# por Microsoft e C# Dev Kit por Microsoft
 
 ### Passos
@@ -29,24 +29,23 @@ API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis.
 
 2. Abra a pasta api-imobiliaria no VS Code ou o arquivo .csproj no Visual Studio
 
-3. Altere o arquivo appsettings.json
-
-   Modifique o atributo ConnectionStrings com as informações do seu banco de dados SQL Server
-
-4. No terminal do VS Code
+3. No terminal do VS Code
    ```bash
    cd AluguelImoveis
    ```
+4. Altere o arquivo appsettings.json
 
+   Modifique o atributo ConnectionStrings com as informações do seu banco de dados SQL Server
+   
 5. Restaure os pacotes:
 ```bash
    dotnet restore
 ```
-4. Inicie a aplicação:
+6. Inicie a aplicação:
 ```bash
    dotnet run
 ```
-5. Acesse a documentação da API em:
+7. Acesse a documentação da API em:
 ```bash
    http://localhost:5287/swagger
 ```
