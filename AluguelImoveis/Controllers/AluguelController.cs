@@ -52,8 +52,19 @@ namespace AluguelImoveis.Controllers
                 DataTermino = aluguelDto.DataTermino
             };
 
-            var createdAluguel = await _aluguelService.CreateAsync(aluguel);
-            return CreatedAtAction(nameof(GetById), new { id = createdAluguel.Id }, createdAluguel);
+            try
+            {
+                var createdAluguel = await _aluguelService.CreateAsync(aluguel);
+                return CreatedAtAction(
+                    nameof(GetById),
+                    new { id = createdAluguel.Id },
+                    createdAluguel
+                );
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
