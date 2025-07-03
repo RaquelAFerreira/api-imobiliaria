@@ -30,17 +30,13 @@ API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis.
 
    dotnet restore
 
-3. Aplique as migrações (se usar EF Core + SQLite):
-
-   dotnet ef database update
-
-4. Inicie a aplicação:
+3. Inicie a aplicação:
 
    dotnet run
 
-5. Acesse a API em:
+4. Acesse a API em:
 
-http://localhost:5287
+   http://localhost:5287
 
 ### Documentações
 
