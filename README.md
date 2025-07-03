@@ -1,6 +1,6 @@
 # AluguelImoveis API
 
-API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis, locatários e propriedades.
+API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis.
 
 ## ⚙️ Tecnologias Utilizadas
 
