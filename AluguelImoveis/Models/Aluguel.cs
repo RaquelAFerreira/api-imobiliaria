@@ -8,8 +8,8 @@ namespace AluguelImoveis.Models
         public DateTime DataInicio { get; set; }
         public DateTime DataTermino { get; set; }
         public Guid ImovelId { get; set; }
-        public Imovel Imovel { get; set; }
+        public Imovel Imovel { get; set; } = new Imovel();
         public Guid LocatarioId { get; set; }
-        public Locatario Locatario { get; set; }
+        public Locatario Locatario { get; set; } = new Locatario();
     }
 }
