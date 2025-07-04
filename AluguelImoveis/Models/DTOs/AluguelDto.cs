@@ -7,7 +7,7 @@ namespace AluguelImoveis.Models.DTOs
         public DateTime DataTermino { get; set; }
         public int TotalDias { get; set; }
         public int DiasRestantes { get; set; }
-        public ImovelDto Imovel { get; set; }
-        public LocatarioDto Locatario { get; set; }
+        public ImovelDto Imovel { get; set; } = new ImovelDto();
+        public LocatarioDto Locatario { get; set; } = new LocatarioDto();
     }
 }
