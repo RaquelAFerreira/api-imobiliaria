@@ -4,7 +4,7 @@ using AluguelImoveis.Services;
 using Moq;
 using Xunit;
 
-namespace AluguelImoveis.Tests.Services
+namespace AluguelImoveis.Test.Services
 {
     public class LocatarioServiceTests
     {
