@@ -26,7 +26,7 @@ namespace AluguelImoveis.Tests.Services
         public async Task GetAllAsync_ShouldReturnAllLocatarios()
         {
             // Arrange
-            var expectedLocatarios = new List<Locatario>
+            var expected = new List<Locatario>
             {
                 new Locatario
                 {
@@ -42,15 +42,13 @@ namespace AluguelImoveis.Tests.Services
                 }
             };
 
-            _mockLocatarioRepository
-                .Setup(repo => repo.GetAllAsync())
-                .ReturnsAsync(expectedLocatarios);
+            _mockLocatarioRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(expected);
 
             // Act
             var result = await _service.GetAllAsync();
 
             // Assert
-            Assert.Equal(expectedLocatarios, result);
+            Assert.Equal(expected, result);
             _mockLocatarioRepository.Verify(repo => repo.GetAllAsync(), Times.Once);
         }
 
@@ -59,7 +57,7 @@ namespace AluguelImoveis.Tests.Services
         {
             // Arrange
             var id = Guid.NewGuid();
-            var expectedLocatario = new Locatario
+            var expected = new Locatario
             {
                 Id = id,
                 NomeCompleto = "Locatario Teste",
@@ -68,13 +66,13 @@ namespace AluguelImoveis.Tests.Services
 
             _mockLocatarioRepository
                 .Setup(repo => repo.GetByIdAsync(id))
-                .ReturnsAsync(expectedLocatario);
+                .ReturnsAsync(expected);
 
             // Act
             var result = await _service.GetByIdAsync(id);
 
             // Assert
-            Assert.Equal(expectedLocatario, result);
+            Assert.Equal(expected, result);
             _mockLocatarioRepository.Verify(repo => repo.GetByIdAsync(id), Times.Once);
         }
 
