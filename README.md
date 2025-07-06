@@ -25,7 +25,7 @@ API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis.
    git clone https://github.com/RaquelAFerreira/api-imobiliaria.git
    ```
 
-1. Criação do banco de dados
+1. [Criação do banco de dados](Docs/bancodedados.pdf)
 
 2. Abra a pasta api-imobiliaria no VS Code ou o arquivo .csproj no Visual Studio
 
@@ -53,5 +53,5 @@ API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis.
 
 - [Swagger](http://localhost:5287/swagger/index.html)
 - [Manual do sistema desktop](Docs/manual.pdf)
-- Criação do banco de dados
-- Execução do front-end
+- [Criação do banco de dados](Docs/bancodedados.pdf)
+- [Execução do front-end](https://github.com/RaquelAFerreira/desktop-imobiliaria)
