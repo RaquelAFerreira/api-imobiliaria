@@ -20,8 +20,8 @@ API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis.
 - Baixar Visual Studio Code ou Visual Studio 2022+
 
 - Baixar extensões recomendadas para VS Code:
-   C# (Microsoft)
-   C# Dev Kit (Microsoft)
+   - C# (Microsoft)
+   - C# Dev Kit (Microsoft)
 
 ### Passos
 
