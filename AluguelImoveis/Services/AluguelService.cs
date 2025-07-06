@@ -111,7 +111,6 @@ namespace AluguelImoveis.Services
         public async Task<List<AluguelDto>> GetAllDetailedAsync()
         {
             var alugueis = await _aluguelRepository.GetAllDetailedAsync();
-            //DEV ver se retorno os ids tambem
             return alugueis
                 .Select(
                     a =>
