@@ -29,10 +29,9 @@ API RESTful desenvolvida com ASP.NET Core para gerenciar aluguéis de imóveis.
    git clone https://github.com/RaquelAFerreira/api-imobiliaria.git
    ```
 
-1. Configure o banco de dados:
-         
-         Consulte o guia [Criação do banco de dados](Docs/bancodedados.pdf)
-         Atualize a connection string do atributo ConnectionStrings.DefaultConnection no arquivo appsettings.json, de acordo com os dados da sua conexão
+1. Configure o banco de dados:        
+- Consulte o guia [Criação do banco de dados](Docs/bancodedados.pdf)
+- Atualize a connection string do atributo ConnectionStrings.DefaultConnection no arquivo appsettings.json, de acordo com os dados da sua conexão
 
 4. Abra a pasta api-imobiliaria no VS Code ou a solução (.sln) no Visual Studio
 
@@ -67,10 +66,9 @@ dotnet test
 ```
 
 Dependências de Teste
-
-      xUnit - Framework de testes
-      Moq - Criação de mocks
-      coverlet - Análise de cobertura
+- xUnit - Framework de testes
+- Moq - Criação de mocks
+- coverlet - Análise de cobertura
 
 ### Documentações
 
