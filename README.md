@@ -68,7 +68,6 @@ dotnet test
 Dependências de Teste
 - xUnit - Framework de testes
 - Moq - Criação de mocks
-- coverlet - Análise de cobertura
 
 ### Documentações
 
