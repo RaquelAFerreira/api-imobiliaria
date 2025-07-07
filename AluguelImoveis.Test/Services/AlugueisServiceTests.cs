@@ -121,6 +121,5 @@ namespace AluguelImoveis.Tests.Services
             Assert.NotNull(result);
             Assert.Single(result);
         }
-
     }
 }
