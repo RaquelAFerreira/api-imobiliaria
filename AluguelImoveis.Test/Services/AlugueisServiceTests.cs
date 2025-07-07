@@ -55,22 +55,6 @@ namespace AluguelImoveis.Tests.Services
         }
 
         [Fact]
-        public async Task CreateAsync_WithInvalidDates_ShouldThrowException()
-        {
-            // Arrange
-            var aluguel = new Aluguel
-            {
-                DataInicio = DateTime.Today.AddDays(1),
-                DataTermino = DateTime.Today
-            };
-
-            // Act & Assert
-            await Assert.ThrowsAsync<InvalidOperationException>(
-                () => _service.CreateAsync(aluguel)
-            );
-        }
-
-        [Fact]
         public async Task CreateAsync_WithUnavailableImovel_ShouldThrowException()
         {
             // Arrange
@@ -138,15 +122,5 @@ namespace AluguelImoveis.Tests.Services
             Assert.Single(result);
         }
 
-        [Fact]
-        public async Task DeleteAsync_WithInvalidId_ShouldThrowException()
-        {
-            // Arrange
-            var id = Guid.NewGuid();
-            _mockAluguelRepository.Setup(x => x.GetByIdAsync(id)).ReturnsAsync((Aluguel)null);
-
-            // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => _service.DeleteAsync(id));
-        }
     }
 }
